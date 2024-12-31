@@ -17,21 +17,20 @@ export default function Index() {
       style={styles.background}
       resizeMode="cover"
     >
-      <View style={styles.logoContainer}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => router.push("/menu")}>
+          <Image
+            source={require("../assets/images/play-button.png")}
+            style={styles.buttonImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <Image
           source={require("../assets/images/logo.png")}
           style={styles.logo}
+          resizeMode="contain"
         />
       </View>
-      <TouchableOpacity
-        style={styles.playButton}
-        onPress={() => router.push("/menu")}
-      >
-        <Image
-          source={require("../assets/images/play-button.png")}
-          style={styles.buttonImage}
-        />
-      </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -41,25 +40,24 @@ const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  logoContainer: {
-    marginTop: height * 0.2,
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
-  logo: {
-    width: width * 0.5,
-    height: height * 0.15,
-    resizeMode: "contain",
-  },
-  playButton: {
-    marginBottom: height * 0.1,
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 0,
   },
   buttonImage: {
-    width: width * 0.3,
-    height: height * 0.08,
-    resizeMode: "contain",
+    width: width * 0.08,
+    height: width * 0.08,
+    top: height * 0.2,
+  },
+  logo: {
+    width: width * 0.6,
+    height: width * 0.25,
+    top: height * 0.15,
   },
 });
