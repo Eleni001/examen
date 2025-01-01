@@ -1,8 +1,8 @@
+import BackgroundImage from "@/components/BackgroundImage";
 import { useRouter } from "expo-router";
 import {
   Dimensions,
   Image,
-  ImageBackground,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -12,11 +12,7 @@ export default function Index() {
   const router = useRouter();
 
   return (
-    <ImageBackground
-      source={require("../assets/images/background.png")}
-      style={styles.background}
-      resizeMode="cover"
-    >
+    <BackgroundImage source={require("../assets/images/background.png")}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => router.push("/menu")}>
           <Image
@@ -31,7 +27,7 @@ export default function Index() {
           resizeMode="contain"
         />
       </View>
-    </ImageBackground>
+    </BackgroundImage>
   );
 }
 
