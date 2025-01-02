@@ -1,23 +1,37 @@
-import { View, Text, StyleSheet } from "react-native";
+// pages/menu.tsx
+import BackgroundImage from "@/components/BackgroundImage";
+import { useRouter } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import ThemeCard from "../components/ThemeCard";
+import { themes } from "../constants/themes";
 
 export default function Menu() {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome to the Menu Page!</Text>
-    </View>
+    <BackgroundImage source={require("../assets/images/background.png")}>
+      <View style={styles.container}>
+        {themes.map((theme) => (
+          <ThemeCard
+            key={theme.id}
+            imageSource={theme.image}
+            onPress={() => router.push(`/game/${theme?.id}`)}
+          />
+        ))}
+      </View>
+    </BackgroundImage>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f8f8f8",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
+    padding: 10,
+    gap: 60,
+    margin: 30,
   },
 });
