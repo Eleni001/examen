@@ -7,7 +7,7 @@ export default function Game() {
   const { id } = useLocalSearchParams();
   const theme = themes.find((t) => t.id === id);
   return (
-    <BackgroundImage source={require("../../assets/images/background.png")}>
+    <BackgroundImage source={theme?.background}>
       <View style={styles.container}>
         <Text style={styles.title}>{theme?.title}</Text>
       </View>
