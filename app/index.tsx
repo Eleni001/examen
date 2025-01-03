@@ -1,12 +1,7 @@
 import BackgroundImage from "@/components/BackgroundImage";
+import { height, width } from "@/constants/constants";
 import { useRouter } from "expo-router";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
@@ -30,8 +25,6 @@ export default function Index() {
     </BackgroundImage>
   );
 }
-
-const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   background: {

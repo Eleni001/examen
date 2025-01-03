@@ -1,8 +1,9 @@
 import BackgroundImage from "@/components/BackgroundImage";
+import { height, width } from "@/constants/constants";
 import { themes } from "@/constants/themes";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -15,33 +16,61 @@ import Animated, {
 export default function Game() {
   const { id } = useLocalSearchParams();
   const theme = themes.find((t) => t.id === id);
-  const rotationAnimation = useSharedValue(0);
+  const rotaionAnimation = useSharedValue(0);
+  const leftImageGlide = useSharedValue(0);
+  const rightImageGlide = useSharedValue(0);
+  const [isTouched, setIsTouched] = useState(false);
 
   useEffect(() => {
-    rotationAnimation.value = withRepeat(
-      withSequence(
-        withTiming(10, { duration: 300 }),
-        withTiming(0, { duration: 300 }),
-        withTiming(10, { duration: 300 }),
-        withTiming(0, { duration: 300 }),
-        withTiming(10, { duration: 300 }),
-        withTiming(0, { duration: 300 }),
-        withDelay(500, withTiming(0, { duration: 0 }))
-      ),
-      500
-    );
-  }, []);
+    if (!isTouched) {
+      rotaionAnimation.value = withRepeat(
+        withSequence(
+          withTiming(10, { duration: 300 }),
+          withTiming(0, { duration: 300 }),
+          withTiming(10, { duration: 300 }),
+          withTiming(0, { duration: 300 }),
+          withTiming(10, { duration: 300 }),
+          withTiming(0, { duration: 300 }),
+          withDelay(500, withTiming(0, { duration: 0 }))
+        ),
+        -1,
+        true
+      );
+    }
+  }, [isTouched]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotationAnimation.value}deg` }],
+  const handleTouch = () => {
+    setIsTouched(true);
+    rotaionAnimation.value = withTiming(0, { duration: 300 });
+    leftImageGlide.value = withTiming(width * -0.08, { duration: 500 });
+    rightImageGlide.value = withTiming(width * 0.08, { duration: 500 });
+  };
+
+  const leftImageStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotate: `${rotaionAnimation.value}deg` },
+      { translateX: leftImageGlide.value },
+    ],
+  }));
+
+  const rightImageStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotate: `${rotaionAnimation.value}deg` },
+      { translateX: rightImageGlide.value },
+    ],
   }));
 
   return (
     <BackgroundImage source={theme?.background}>
-      <Animated.View style={animatedStyle}>
-        <Image
-          source={theme?.cover}
-          style={styles.cover}
+      <Animated.View style={styles.container} onTouchStart={handleTouch}>
+        <Animated.Image
+          source={theme?.cover1}
+          style={[styles.image, leftImageStyle]}
+          resizeMode="contain"
+        />
+        <Animated.Image
+          source={theme?.cover2}
+          style={[styles.image, rightImageStyle]}
           resizeMode="contain"
         />
       </Animated.View>
@@ -49,13 +78,12 @@ export default function Game() {
   );
 }
 
-const { width, height } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
-  cover: {
-    flex: 1,
-    marginTop: height * 0.23,
-    width: width * 0.6,
-    height: height * 0.6,
+  container: {
+    flexDirection: "row",
+  },
+  image: {
+    width: width * 0.15,
+    marginTop: height * 0.4,
   },
 });
