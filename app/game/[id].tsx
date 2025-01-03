@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   image: {
-    width: width * 0.15,
-    marginTop: height * 0.4,
+    width: width * 0.13,
+    marginTop: height * 0.55,
   },
 });
