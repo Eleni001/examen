@@ -62,7 +62,7 @@ export default function Game() {
 
   return (
     <BackgroundImage source={theme?.background}>
-      <Animated.View style={styles.container} onTouchStart={handleTouch}>
+      <Animated.View style={styles.container} onPointerDown={handleTouch}>
         <Animated.Image
           source={theme?.cover1}
           style={[styles.image, leftImageStyle]}
