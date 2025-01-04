@@ -20,6 +20,8 @@ export default function Game() {
   const leftImageGlide = useSharedValue(0);
   const rightImageGlide = useSharedValue(0);
   const [isTouched, setIsTouched] = useState(false);
+  const backgroundScale = useSharedValue(1);
+  const backgroundTranslateY = useSharedValue(0);
 
   useEffect(() => {
     if (!isTouched) {
@@ -44,6 +46,11 @@ export default function Game() {
     rotaionAnimation.value = withTiming(0, { duration: 300 });
     leftImageGlide.value = withTiming(width * -0.08, { duration: 500 });
     rightImageGlide.value = withTiming(width * 0.08, { duration: 500 });
+    backgroundScale.value = withDelay(500, withTiming(2, { duration: 700 }));
+    backgroundTranslateY.value = withDelay(
+      500,
+      withTiming(height * -0.2, { duration: 700 })
+    );
   };
 
   const leftImageStyle = useAnimatedStyle(() => ({
@@ -60,27 +67,43 @@ export default function Game() {
     ],
   }));
 
+  const backgroundStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: backgroundScale.value },
+      { translateY: backgroundTranslateY.value },
+    ],
+  }));
+
   return (
-    <BackgroundImage source={theme?.background}>
-      <Animated.View style={styles.container} onPointerDown={handleTouch}>
-        <Animated.Image
-          source={theme?.cover1}
-          style={[styles.image, leftImageStyle]}
-          resizeMode="contain"
-        />
-        <Animated.Image
-          source={theme?.cover2}
-          style={[styles.image, rightImageStyle]}
-          resizeMode="contain"
-        />
-      </Animated.View>
-    </BackgroundImage>
+    <Animated.View style={[styles.outerContainer, backgroundStyle]}>
+      <BackgroundImage source={theme?.background}>
+        <Animated.View style={styles.container} onPointerDown={handleTouch}>
+          <Animated.Image
+            source={theme?.cover1}
+            style={[styles.image, leftImageStyle]}
+            resizeMode="contain"
+          />
+          <Animated.Image
+            source={theme?.cover2}
+            style={[styles.image, rightImageStyle]}
+            resizeMode="contain"
+          />
+        </Animated.View>
+      </BackgroundImage>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+  },
   container: {
     flexDirection: "row",
+    position: "absolute",
   },
   image: {
     width: width * 0.13,
