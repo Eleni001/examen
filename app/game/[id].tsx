@@ -1,6 +1,7 @@
 import BackgroundImage from "@/components/BackgroundImage";
 import { height, width } from "@/constants/constants";
 import { themes } from "@/constants/themes";
+import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -22,6 +23,21 @@ export default function Game() {
   const [isTouched, setIsTouched] = useState(false);
   const backgroundScale = useSharedValue(1);
   const backgroundTranslateY = useSharedValue(0);
+  const [objectImage, setObjectImage] = useState(false);
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+
+  useEffect(() => {
+    async function loadSound() {
+      const { sound } = await Audio.Sound.createAsync(
+        require("../../assets/sounds/dog-bark.mp3")
+      );
+      setSound(sound);
+    }
+    loadSound();
+    return () => {
+      sound?.unloadAsync();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isTouched) {
@@ -42,15 +58,28 @@ export default function Game() {
   }, [isTouched]);
 
   const handleTouch = () => {
-    setIsTouched(true);
-    rotaionAnimation.value = withTiming(0, { duration: 300 });
-    leftImageGlide.value = withTiming(width * -0.08, { duration: 500 });
-    rightImageGlide.value = withTiming(width * 0.08, { duration: 500 });
-    backgroundScale.value = withDelay(500, withTiming(2, { duration: 700 }));
-    backgroundTranslateY.value = withDelay(
-      500,
-      withTiming(height * -0.2, { duration: 700 })
-    );
+    if (isTouched) {
+      setObjectImage(false);
+      backgroundScale.value = withTiming(1, { duration: 700 });
+      backgroundTranslateY.value = withTiming(0, { duration: 700 });
+      leftImageGlide.value = withTiming(0, { duration: 500 });
+      rightImageGlide.value = withTiming(0, { duration: 500 });
+      setIsTouched(false);
+    } else {
+      setIsTouched(true);
+      rotaionAnimation.value = withTiming(0, { duration: 300 });
+      leftImageGlide.value = withTiming(width * -0.08, { duration: 500 });
+      rightImageGlide.value = withTiming(width * 0.08, { duration: 500 });
+      backgroundScale.value = withDelay(500, withTiming(2, { duration: 700 }));
+      backgroundTranslateY.value = withDelay(
+        500,
+        withTiming(height * -0.2, { duration: 700 })
+      );
+      setTimeout(() => {
+        setObjectImage(true);
+        sound?.playAsync();
+      }, 700);
+    }
   };
 
   const leftImageStyle = useAnimatedStyle(() => ({
@@ -88,6 +117,13 @@ export default function Game() {
             style={[styles.image, rightImageStyle]}
             resizeMode="contain"
           />
+
+          {objectImage && (
+            <Animated.Image
+              source={require("../../assets/images/kitchen.png")}
+              style={styles.objectImage}
+            />
+          )}
         </Animated.View>
       </BackgroundImage>
     </Animated.View>
@@ -108,5 +144,12 @@ const styles = StyleSheet.create({
   image: {
     width: width * 0.13,
     marginTop: height * 0.55,
+  },
+  objectImage: {
+    position: "absolute",
+    width: width * 0.2,
+    height: width * 0.15,
+    top: height * 0.65,
+    left: width * 0.02,
   },
 });
