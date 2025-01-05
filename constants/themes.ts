@@ -1,4 +1,21 @@
-export const themes = [
+import { AVPlaybackSource } from "expo-av";
+
+export interface ObjectItem {
+  image: object;
+  sound: AVPlaybackSource;
+}
+
+export interface Theme {
+  id: string;
+  title: string;
+  image: object;
+  background: object;
+  cover1: object;
+  cover2: object;
+  objects: ObjectItem[];
+}
+
+export const themes: Theme[] = [
   {
     id: "1",
     title: "Farm",
@@ -6,8 +23,18 @@ export const themes = [
     background: require("../assets/images/background1.png"),
     cover1: require("../assets/images/cover.png"),
     cover2: require("../assets/images/cover.png"),
+    objects: [
+      {
+        image: require("../assets/images/dog.png"),
+        sound: require("../assets/sounds/dog-bark.mp3"),
+      },
+      {
+        image: require("../assets/images/kitchen.png"),
+        sound: require("../assets/sounds/sound.mp3"),
+      },
+    ],
   },
-  {
+  /* {
     id: "2",
     title: "Colors",
     image: require("../assets/images/colors.png"),
@@ -18,5 +45,5 @@ export const themes = [
     title: "Kitchen",
     image: require("../assets/images/kitchen.png"),
     background: require("../assets/images/colors.png"),
-  },
+  }, */
 ];

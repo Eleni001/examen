@@ -16,7 +16,7 @@ import Animated, {
 
 export default function Game() {
   const { id } = useLocalSearchParams();
-  const theme = themes.find((t) => t.id === id);
+  const theme = themes.find((t) => t.id === id) || themes[0];
   const rotaionAnimation = useSharedValue(0);
   const leftImageGlide = useSharedValue(0);
   const rightImageGlide = useSharedValue(0);
@@ -25,11 +25,12 @@ export default function Game() {
   const backgroundTranslateY = useSharedValue(0);
   const [objectImage, setObjectImage] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [currentObject, setCurrentObject] = useState(0);
 
   useEffect(() => {
     async function loadSound() {
       const { sound } = await Audio.Sound.createAsync(
-        require("../../assets/sounds/dog-bark.mp3")
+        theme.objects[currentObject].sound
       );
       setSound(sound);
     }
@@ -37,7 +38,7 @@ export default function Game() {
     return () => {
       sound?.unloadAsync();
     };
-  }, []);
+  }, [currentObject]);
 
   useEffect(() => {
     if (!isTouched) {
@@ -65,6 +66,7 @@ export default function Game() {
       leftImageGlide.value = withTiming(0, { duration: 500 });
       rightImageGlide.value = withTiming(0, { duration: 500 });
       setIsTouched(false);
+      setCurrentObject((prevObject) => (prevObject + 1) % theme.objects.length);
     } else {
       setIsTouched(true);
       rotaionAnimation.value = withTiming(0, { duration: 300 });
@@ -120,7 +122,7 @@ export default function Game() {
 
           {objectImage && (
             <Animated.Image
-              source={require("../../assets/images/kitchen.png")}
+              source={theme.objects[currentObject].image}
               style={styles.objectImage}
             />
           )}
@@ -146,10 +148,10 @@ const styles = StyleSheet.create({
     marginTop: height * 0.55,
   },
   objectImage: {
-    position: "absolute",
-    width: width * 0.2,
-    height: width * 0.15,
-    top: height * 0.65,
-    left: width * 0.02,
+    /* position: "absolute", */
+    width: width * 0.08,
+    height: width * 0.1,
+    top: height * 0.8,
+    left: width * 0.08,
   },
 });
