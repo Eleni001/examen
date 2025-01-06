@@ -48,18 +48,20 @@ export const themes: Theme[] = [
         height: 0.13,
         top: 0.67,
       },
+      {
+        image: require("../assets/images/cat.png"),
+        sound: require("../assets/sounds/sound.mp3"),
+        width: 0.07,
+        height: 0.065,
+        top: 0.77,
+      },
+      {
+        image: require("../assets/images/horse.png"),
+        sound: require("../assets/sounds/sound.mp3"),
+        width: 0.115,
+        height: 0.11,
+        top: 0.71,
+      },
     ],
   },
-  /* {
-    id: "2",
-    title: "Colors",
-    image: require("../assets/images/colors.png"),
-    background: require("../assets/images/colors.png"),
-  },
-  {
-    id: "3",
-    title: "Kitchen",
-    image: require("../assets/images/kitchen.png"),
-    background: require("../assets/images/colors.png"),
-  }, */
 ];

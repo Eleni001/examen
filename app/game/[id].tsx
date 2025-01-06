@@ -156,9 +156,6 @@ const styles = StyleSheet.create({
   },
   objectImage: {
     position: "absolute",
-    /* width: width * 0.07,
-    height: width * 0.09, */
-    /* top: height * 0.733, */
     left: width * 0.44,
   },
 });
