@@ -1,4 +1,5 @@
 import BackgroundImage from "@/components/BackgroundImage";
+import { height, width } from "@/constants/constants";
 import { useRouter } from "expo-router";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
@@ -10,7 +11,7 @@ export default function Index() {
       <View style={styles.container}>
         <TouchableOpacity onPress={() => router.push("/menu")}>
           <Image
-            source={require("../assets/images/play-button.png")}
+            source={require("../assets/images/new-play.png")}
             style={styles.buttonImage}
             resizeMode="contain"
           />
@@ -31,11 +32,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonImage: {
-    width: 50,
-    height: 50,
+    width: width * 0.1,
+    height: width * 0.1,
+    top: height * 0.155,
   },
   logo: {
-    width: 350,
-    height: 100,
+    width: width * 0.7,
+    height: height * 0.6,
+    top: height * 0.13,
   },
 });
