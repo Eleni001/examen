@@ -4,7 +4,7 @@ import { themes } from "@/constants/themes";
 import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -75,7 +75,7 @@ export default function Game() {
       backgroundScale.value = withDelay(500, withTiming(2, { duration: 700 }));
       backgroundTranslateY.value = withDelay(
         500,
-        withTiming(height * -0.2, { duration: 700 })
+        withTiming(height * -0.22, { duration: 700 })
       );
       setTimeout(() => {
         setObjectImage(true);
@@ -119,14 +119,21 @@ export default function Game() {
             style={[styles.image, rightImageStyle]}
             resizeMode="contain"
           />
-
-          {objectImage && (
-            <Animated.Image
-              source={theme.objects[currentObject].image}
-              style={styles.objectImage}
-            />
-          )}
         </Animated.View>
+
+        {objectImage && (
+          <Image
+            source={theme.objects[currentObject].image}
+            style={[
+              styles.objectImage,
+              {
+                width: width * theme.objects[currentObject].width,
+                height: width * theme.objects[currentObject].height,
+                top: height * theme.objects[currentObject].top,
+              },
+            ]}
+          />
+        )}
       </BackgroundImage>
     </Animated.View>
   );
@@ -148,10 +155,10 @@ const styles = StyleSheet.create({
     marginTop: height * 0.55,
   },
   objectImage: {
-    /* position: "absolute", */
-    width: width * 0.08,
-    height: width * 0.1,
-    top: height * 0.8,
-    left: width * 0.08,
+    position: "absolute",
+    /* width: width * 0.07,
+    height: width * 0.09, */
+    /* top: height * 0.733, */
+    left: width * 0.44,
   },
 });

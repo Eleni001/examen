@@ -3,6 +3,9 @@ import { AVPlaybackSource } from "expo-av";
 export interface ObjectItem {
   image: object;
   sound: AVPlaybackSource;
+  width: number;
+  height: number;
+  top: number;
 }
 
 export interface Theme {
@@ -27,10 +30,23 @@ export const themes: Theme[] = [
       {
         image: require("../assets/images/dog.png"),
         sound: require("../assets/sounds/dog-bark.mp3"),
+        width: 0.07,
+        height: 0.09,
+        top: 0.733,
       },
       {
-        image: require("../assets/images/kitchen.png"),
+        image: require("../assets/images/bunnie.png"),
+        sound: require("../assets/sounds/dog-bark.mp3"),
+        width: 0.04,
+        height: 0.06,
+        top: 0.78,
+      },
+      {
+        image: require("../assets/images/cow.png"),
         sound: require("../assets/sounds/sound.mp3"),
+        width: 0.14,
+        height: 0.13,
+        top: 0.67,
       },
     ],
   },
