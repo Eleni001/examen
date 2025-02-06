@@ -44,11 +44,12 @@ export default function Game() {
     if (!isTouched) {
       rotaionAnimation.value = withRepeat(
         withSequence(
-          withTiming(10, { duration: 300 }),
-          withTiming(0, { duration: 300 }),
-          withTiming(10, { duration: 300 }),
-          withTiming(0, { duration: 300 }),
-          withTiming(10, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
           withTiming(0, { duration: 300 }),
           withDelay(500, withTiming(0, { duration: 0 }))
         ),
@@ -84,16 +85,20 @@ export default function Game() {
     }
   };
 
+  const containerAnimationStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotaionAnimation.value}deg` }],
+  }));
+
   const leftImageStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${rotaionAnimation.value}deg` },
+      /* { rotate: `${rotaionAnimation.value}deg` }, */
       { translateX: leftImageGlide.value },
     ],
   }));
 
   const rightImageStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${rotaionAnimation.value}deg` },
+      /* { rotate: `${rotaionAnimation.value}deg` }, */
       { translateX: rightImageGlide.value },
     ],
   }));
@@ -108,15 +113,18 @@ export default function Game() {
   return (
     <Animated.View style={[styles.outerContainer, backgroundStyle]}>
       <BackgroundImage source={theme?.background}>
-        <Animated.View style={styles.container} onPointerDown={handleTouch}>
+        <Animated.View
+          style={[styles.container, containerAnimationStyle]}
+          onPointerDown={handleTouch}
+        >
           <Animated.Image
             source={theme?.cover1}
-            style={[styles.image /* leftImageStyle */]}
+            style={[styles.image, leftImageStyle]}
             resizeMode="cover"
           />
           <Animated.Image
             source={theme?.cover2}
-            style={[styles.image /* rightImageStyle */]}
+            style={[styles.image, rightImageStyle]}
             resizeMode="cover"
           />
         </Animated.View>
