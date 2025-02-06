@@ -111,13 +111,13 @@ export default function Game() {
         <Animated.View style={styles.container} onPointerDown={handleTouch}>
           <Animated.Image
             source={theme?.cover1}
-            style={[styles.image, leftImageStyle]}
-            resizeMode="contain"
+            style={[styles.image /* leftImageStyle */]}
+            resizeMode="cover"
           />
           <Animated.Image
             source={theme?.cover2}
-            style={[styles.image, rightImageStyle]}
-            resizeMode="contain"
+            style={[styles.image /* rightImageStyle */]}
+            resizeMode="cover"
           />
         </Animated.View>
 
@@ -149,10 +149,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     position: "absolute",
+    width: width * 0.19,
+    height: height * 0.32,
+    top: height * 0.64,
+    left: width * 0.407,
   },
   image: {
-    width: width * 0.13,
-    marginTop: height * 0.55,
+    height: "100%",
+    flex: 1,
   },
   objectImage: {
     position: "absolute",

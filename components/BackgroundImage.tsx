@@ -1,7 +1,7 @@
 import { ImageBackground, StyleSheet } from "react-native";
 
 interface BackgroundImageProps {
-  source: any;
+  source: object;
   children: React.ReactNode;
   style?: object;
 }
