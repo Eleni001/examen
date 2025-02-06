@@ -15,6 +15,7 @@ export interface Theme {
   background: object;
   cover1: object;
   cover2: object;
+  coverSound: AVPlaybackSource;
   objects: ObjectItem[];
 }
 
@@ -26,6 +27,7 @@ export const themes: Theme[] = [
     background: require("../assets/images/background-t1.png"),
     cover1: require("../assets/images/leftCover.png"),
     cover2: require("../assets/images/rightCover.png"),
+    coverSound: require("../assets/sounds/coverSound1.mp3"),
     objects: [
       {
         image: require("../assets/images/dog.png"),

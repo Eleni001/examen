@@ -25,20 +25,33 @@ export default function Game() {
   const backgroundTranslateY = useSharedValue(0);
   const [objectImage, setObjectImage] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
 
   useEffect(() => {
-    async function loadSound() {
+    async function loadedObjectSound() {
       const { sound } = await Audio.Sound.createAsync(
         theme.objects[currentObject].sound
       );
       setSound(sound);
     }
-    loadSound();
+    loadedObjectSound();
     return () => {
       sound?.unloadAsync();
     };
   }, [currentObject]);
+  useEffect(() => {
+    async function loadedCoverSound() {
+      const { sound } = await Audio.Sound.createAsync(theme.coverSound);
+      await sound.setIsLoopingAsync(true);
+      setCoverSound(sound);
+    }
+    loadedCoverSound();
+
+    return () => {
+      sound?.unloadAsync();
+    };
+  }, [theme]);
 
   useEffect(() => {
     if (!isTouched) {
@@ -56,8 +69,16 @@ export default function Game() {
         -1,
         true
       );
+
+      if (coverSound) {
+        coverSound.playAsync();
+      } else {
+        console.log("cover sound is null");
+      }
+    } else {
+      coverSound?.stopAsync();
     }
-  }, [isTouched]);
+  }, [isTouched, coverSound]);
 
   const handleTouch = () => {
     if (isTouched) {
