@@ -4,7 +4,7 @@ import { themes } from "@/constants/themes";
 import { Audio } from "expo-av";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Pressable, StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,38 +25,60 @@ export default function Game() {
   const backgroundTranslateY = useSharedValue(0);
   const [objectImage, setObjectImage] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
 
   useEffect(() => {
-    async function loadSound() {
+    async function loadedObjectSound() {
       const { sound } = await Audio.Sound.createAsync(
         theme.objects[currentObject].sound
       );
       setSound(sound);
     }
-    loadSound();
+    loadedObjectSound();
     return () => {
       sound?.unloadAsync();
     };
   }, [currentObject]);
+  useEffect(() => {
+    async function loadedCoverSound() {
+      const { sound } = await Audio.Sound.createAsync(theme.coverSound);
+      await sound.setIsLoopingAsync(true);
+      setCoverSound(sound);
+    }
+    loadedCoverSound();
+
+    return () => {
+      sound?.unloadAsync();
+    };
+  }, [theme]);
 
   useEffect(() => {
     if (!isTouched) {
       rotaionAnimation.value = withRepeat(
         withSequence(
-          withTiming(10, { duration: 300 }),
-          withTiming(0, { duration: 300 }),
-          withTiming(10, { duration: 300 }),
-          withTiming(0, { duration: 300 }),
-          withTiming(10, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
+          withTiming(-3, { duration: 300 }),
+          withTiming(3, { duration: 300 }),
           withTiming(0, { duration: 300 }),
           withDelay(500, withTiming(0, { duration: 0 }))
         ),
         -1,
         true
       );
+
+      if (coverSound) {
+        coverSound.playAsync();
+      } else {
+        console.log("cover sound is null");
+      }
+    } else {
+      coverSound?.stopAsync();
     }
-  }, [isTouched]);
+  }, [isTouched, coverSound]);
 
   const handleTouch = () => {
     if (isTouched) {
@@ -84,16 +106,20 @@ export default function Game() {
     }
   };
 
+  const containerAnimationStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotaionAnimation.value}deg` }],
+  }));
+
   const leftImageStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${rotaionAnimation.value}deg` },
+      /* { rotate: `${rotaionAnimation.value}deg` }, */
       { translateX: leftImageGlide.value },
     ],
   }));
 
   const rightImageStyle = useAnimatedStyle(() => ({
     transform: [
-      { rotate: `${rotaionAnimation.value}deg` },
+      /* { rotate: `${rotaionAnimation.value}deg` }, */
       { translateX: rightImageGlide.value },
     ],
   }));
@@ -108,16 +134,19 @@ export default function Game() {
   return (
     <Animated.View style={[styles.outerContainer, backgroundStyle]}>
       <BackgroundImage source={theme?.background}>
-        <Animated.View style={styles.container} onPointerDown={handleTouch}>
+        <Animated.View
+          style={[styles.container, containerAnimationStyle]}
+          onPointerDown={handleTouch}
+        >
           <Animated.Image
             source={theme?.cover1}
             style={[styles.image, leftImageStyle]}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <Animated.Image
             source={theme?.cover2}
             style={[styles.image, rightImageStyle]}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </Animated.View>
 
@@ -149,10 +178,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     position: "absolute",
+    width: width * 0.19,
+    height: height * 0.32,
+    top: height * 0.64,
+    left: width * 0.407,
   },
   image: {
-    width: width * 0.13,
-    marginTop: height * 0.55,
+    height: "100%",
+    flex: 1,
   },
   objectImage: {
     position: "absolute",
