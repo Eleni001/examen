@@ -1,5 +1,5 @@
+import { width } from "@/constants/constants";
 import {
-  Dimensions,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -19,15 +19,12 @@ export default function ThemeCard({ imageSource, onPress }: ThemeCardProps) {
   );
 }
 
-const { width, height } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
   card: {
-    /* margin: 30, */
     borderRadius: 10,
     overflow: "hidden",
-    width: width * 0.3,
-    height: height * 0.36,
+    width: width * 0.297,
+    height: width * 0.21,
   },
   image: {
     width: "100%",
