@@ -1,18 +1,42 @@
 import BackgroundImage from "@/components/BackgroundImage";
 import { height, width } from "@/constants/constants";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 
 export default function Index() {
   const router = useRouter();
+  const buttonZoom = useSharedValue(1);
+
+  useEffect(() => {
+    buttonZoom.value = withRepeat(
+      withSequence(
+        withTiming(1.2, { duration: 700 }),
+        withTiming(1, { duration: 700 })
+      ),
+      -1,
+      true
+    );
+  }, []);
+
+  const animatedButtonStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: buttonZoom.value }],
+  }));
 
   return (
     <BackgroundImage source={require("../assets/images/background.png")}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => router.push("/menu")}>
-          <Image
-            source={require("../assets/images/new-play.png")}
-            style={styles.buttonImage}
+          <Animated.Image
+            source={require("../assets/images/play-button.png")}
+            style={[styles.buttonImage, animatedButtonStyle]}
             resizeMode="contain"
           />
         </TouchableOpacity>
