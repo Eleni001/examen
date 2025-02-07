@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     top: height * 0.155,
   },
   logo: {
-    width: width * 0.7,
-    height: height * 0.6,
-    top: height * 0.13,
+    width: width * 0.4,
+    height: height * 0.5,
+    top: height * 0.15,
   },
 });
