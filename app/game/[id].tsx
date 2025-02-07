@@ -131,7 +131,10 @@ export default function Game() {
       <BackgroundImage source={theme?.background}>
         <TouchableOpacity
           style={styles.returnButton}
-          onPress={() => router.push("/menu")}
+          onPress={() => {
+            coverSound?.stopAsync();
+            router.push("/menu");
+          }}
         >
           <Image
             source={require("../../assets/images/return.png")}
@@ -141,7 +144,7 @@ export default function Game() {
         </TouchableOpacity>
         <Animated.View
           style={[styles.container, containerAnimationStyle]}
-          onPointerDown={handleTouch}
+          onTouchStart={handleTouch}
         >
           <Animated.Image
             source={theme?.cover1}

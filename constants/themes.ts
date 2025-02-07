@@ -23,7 +23,7 @@ export const themes: Theme[] = [
   {
     id: "1",
     title: "Farm",
-    image: require("../assets/images/menu-item.png"),
+    image: require("../assets/images/menu-item1.png"),
     background: require("../assets/images/background-t1.png"),
     cover1: require("../assets/images/leftCover.png"),
     cover2: require("../assets/images/rightCover.png"),
@@ -35,7 +35,6 @@ export const themes: Theme[] = [
         width: 0.063,
         height: 0.1,
         top: 0.73,
-      
       },
       {
         image: require("../assets/images/bunnie.png"),

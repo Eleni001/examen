@@ -1,5 +1,6 @@
 // pages/menu.tsx
 import BackgroundImage from "@/components/BackgroundImage";
+import { height, width } from "@/constants/constants";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import ThemeCard from "../components/ThemeCard";
@@ -25,13 +26,11 @@ export default function Menu() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-    gap: 60,
-    margin: 30,
+    justifyContent: "space-evenly",
+    gap: "2%",
+    marginVertical: width * 0.2,
+    marginHorizontal: height * 0.2,
   },
 });
