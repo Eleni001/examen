@@ -2,9 +2,9 @@ import BackgroundImage from "@/components/BackgroundImage";
 import { height, width } from "@/constants/constants";
 import { themes } from "@/constants/themes";
 import { Audio } from "expo-av";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Pressable, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -27,6 +27,7 @@ export default function Game() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     async function loadedObjectSound() {
@@ -111,17 +112,11 @@ export default function Game() {
   }));
 
   const leftImageStyle = useAnimatedStyle(() => ({
-    transform: [
-      /* { rotate: `${rotaionAnimation.value}deg` }, */
-      { translateX: leftImageGlide.value },
-    ],
+    transform: [{ translateX: leftImageGlide.value }],
   }));
 
   const rightImageStyle = useAnimatedStyle(() => ({
-    transform: [
-      /* { rotate: `${rotaionAnimation.value}deg` }, */
-      { translateX: rightImageGlide.value },
-    ],
+    transform: [{ translateX: rightImageGlide.value }],
   }));
 
   const backgroundStyle = useAnimatedStyle(() => ({
@@ -134,6 +129,16 @@ export default function Game() {
   return (
     <Animated.View style={[styles.outerContainer, backgroundStyle]}>
       <BackgroundImage source={theme?.background}>
+        <TouchableOpacity
+          style={styles.returnButton}
+          onPress={() => router.push("/menu")}
+        >
+          <Image
+            source={require("../../assets/images/return.png")}
+            style={styles.return}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <Animated.View
           style={[styles.container, containerAnimationStyle]}
           onPointerDown={handleTouch}
@@ -174,6 +179,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
+  },
+  returnButton: {
+    position: "absolute",
+    top: height * 0.02,
+    left: width * 0.02,
+    zIndex: 10,
+  },
+  return: {
+    width: width * 0.05,
+    height: width * 0.05,
   },
   container: {
     flexDirection: "row",
