@@ -149,6 +149,7 @@ export default function Game() {
             containerAnimationStyle,
           ]}
           onTouchStart={handleTouch}
+          onPointerDown={handleTouch}
         >
           <Animated.Image
             source={theme?.cover1}
