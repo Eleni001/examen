@@ -148,7 +148,7 @@ export default function Game() {
             { width: width * theme.containerWidth },
             containerAnimationStyle,
           ]}
-          onTouchStart={handleTouch}
+          /* onTouchStart={handleTouch} */
           onPointerDown={handleTouch}
         >
           <Animated.Image
