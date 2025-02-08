@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   returnButton: {
     position: "absolute",
-    top: height * 0.02,
+    top: height * 0.06,
     left: width * 0.02,
     zIndex: 10,
   },

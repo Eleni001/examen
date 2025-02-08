@@ -26,7 +26,7 @@ export default function Menu() {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    /* flexDirection: "row", */
     flexWrap: "wrap",
     justifyContent: "space-evenly",
     gap: "2%",
