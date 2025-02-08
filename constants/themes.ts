@@ -70,7 +70,7 @@ export const themes: Theme[] = [
   {
     id: "2",
     title: "Numbers",
-    image: require("../assets/images/menu-item1.png"),
+    image: require("../assets/images/menu-item2.png"),
     background: require("../assets/images/background-t2.png"),
     cover1: require("../assets/images/l.png"),
     cover2: require("../assets/images/r.png"),
