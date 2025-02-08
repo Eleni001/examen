@@ -143,7 +143,11 @@ export default function Game() {
           />
         </TouchableOpacity>
         <Animated.View
-          style={[styles.container, containerAnimationStyle]}
+          style={[
+            styles.container,
+            { width: width * theme.containerWidth },
+            containerAnimationStyle,
+          ]}
           onTouchStart={handleTouch}
         >
           <Animated.Image
@@ -196,7 +200,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     position: "absolute",
-    width: width * 0.19,
     height: height * 0.32,
     top: height * 0.64,
     left: width * 0.407,

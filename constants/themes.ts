@@ -7,7 +7,6 @@ export interface ObjectItem {
   height: number;
   top: number;
 }
-
 export interface Theme {
   id: string;
   title: string;
@@ -16,6 +15,7 @@ export interface Theme {
   cover1: object;
   cover2: object;
   coverSound: AVPlaybackSource;
+  containerWidth: number;
   objects: ObjectItem[];
 }
 
@@ -28,6 +28,7 @@ export const themes: Theme[] = [
     cover1: require("../assets/images/left-cover1.png"),
     cover2: require("../assets/images/right-cover1.png"),
     coverSound: require("../assets/sounds/cover-sound1.mp3"),
+    containerWidth: 0.19,
     objects: [
       {
         image: require("../assets/images/dog.png"),
@@ -71,9 +72,10 @@ export const themes: Theme[] = [
     title: "Numbers",
     image: require("../assets/images/menu-item1.png"),
     background: require("../assets/images/background-t2.png"),
-    cover1: require("../assets/images/left-cover2.png"),
-    cover2: require("../assets/images/right-cover2.png"),
+    cover1: require("../assets/images/l.png"),
+    cover2: require("../assets/images/r.png"),
     coverSound: require("../assets/sounds/cover-sound1.mp3"),
+    containerWidth: 0.12,
     objects: [
       {
         image: require("../assets/images/zero.png"),
