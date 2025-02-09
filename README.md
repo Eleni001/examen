@@ -1,50 +1,45 @@
-# Welcome to your Expo app 👋
+# An Interactive Toddler Learning Game
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project Description
 
-## Get started
+This is an interactive toddler game called Lesan which is built with React Native Expo, designed to help children between age 3-8 years to learn simple daily-used words. The game uses images, sound effects and animations to create fun and engaging scenes that make learning enjoyable.
 
-1. Install dependencies
+## The app features
 
-   ```bash
-   npm install
-   ```
+- **Visual Learning**: Interactive images to help children recognize images and the words connected to the images.
 
-2. Start the app
+- **Sound Effects & Pronunciations**: Audio feedback for word pronunciation.
 
-   ```bash
-    npx expo start
-   ```
+- **Simple Animations**: Engaging animations to capture attention.
 
-In the output, you'll find options to open the app in a
+- **Realtime Database**: Uses Firebase Realtime Database to toggle features of the game.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Technologies Used
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- React Native (with Expo)
 
-## Get a fresh project
+- Firebase Web - Realtime Database and Hosting
 
-When you're ready, run:
+- TypeScript
 
-```bash
-npm run reset-project
-```
+- Expo Router
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Prerequisites
 
-## Learn more
+- Node
 
-To learn more about developing your project with Expo, look at the following resources:
+## Clone repository
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+`git clone https://github.com/Eleni001/examen.git`
 
-## Join the community
+## Install dependencies
 
-Join our community of developers creating universal apps.
+`npm install`
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Run the project
+
+`npx expo start`
+
+## The deployed version
+
+https://examen-8f884.web.app/
