@@ -13,6 +13,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+/* import { themes } from ".."; */
 
 export default function Game() {
   const { id } = useLocalSearchParams();
@@ -28,7 +29,7 @@ export default function Game() {
   const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
   const router = useRouter();
-
+  
   useEffect(() => {
     async function loadedObjectSound() {
       const { sound } = await Audio.Sound.createAsync(
