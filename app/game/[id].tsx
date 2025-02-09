@@ -1,10 +1,8 @@
 import BackgroundImage from "@/components/BackgroundImage";
 import { height, width } from "@/constants/constants";
 import { themes } from "@/constants/themes";
-
 import { Audio } from "expo-av";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { getDatabase, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Animated, {
@@ -15,7 +13,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { app } from "../index";
+/* import { themes } from ".."; */
 
 export default function Game() {
   const { id } = useLocalSearchParams();
@@ -31,12 +29,7 @@ export default function Game() {
   const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
   const router = useRouter();
-  const database = getDatabase(app);
-
-  onValue(ref(database, "themes"), (snapshot) => {
-    console.log(snapshot);
-    console.log(snapshot.val());
-  });
+  
   useEffect(() => {
     async function loadedObjectSound() {
       const { sound } = await Audio.Sound.createAsync(
