@@ -34,6 +34,7 @@ export default function Index() {
     <BackgroundImage source={require("../assets/images/background.png")}>
       <View style={styles.container}>
         <TouchableOpacity
+          style={styles.playButton}
           accessible={true}
           accessibilityRole="button"
           accessibilityLabel="Play Button"
@@ -64,14 +65,22 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
+  playButton: {
+    position: "absolute",
+    top: height * 0.04,
+    width: width * 0.12,
+    height: width * 0.12,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "100%",
+  },
   buttonImage: {
-    width: width * 0.13,
-    height: width * 0.13,
-    top: height * 0.155,
+    width: "100%",
+    height: "100%",
   },
   logo: {
     width: width * 0.4,
     height: height * 0.5,
-    top: height * 0.15,
+    top: height * 0.25,
   },
 });
