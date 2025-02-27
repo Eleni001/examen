@@ -33,7 +33,13 @@ export default function Index() {
   return (
     <BackgroundImage source={require("../assets/images/background.png")}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => router.push("/menu")}>
+        <TouchableOpacity
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Play Button"
+          accessibilityHint="Tap to start the game"
+          onPress={() => router.push("/menu")}
+        >
           <Animated.Image
             source={require("../assets/images/play-button.png")}
             style={[styles.buttonImage, animatedButtonStyle]}
@@ -44,6 +50,9 @@ export default function Index() {
           source={require("../assets/images/logo.png")}
           style={styles.logo}
           resizeMode="contain"
+          accessible={true}
+          accessibilityRole="image"
+          accessibilityLabel="Lesan Logo"
         />
       </View>
     </BackgroundImage>
@@ -56,8 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonImage: {
-    width: width * 0.1,
-    height: width * 0.1,
+    width: width * 0.13,
+    height: width * 0.13,
     top: height * 0.155,
   },
   logo: {
