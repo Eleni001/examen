@@ -13,7 +13,6 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-/* import { themes } from ".."; */
 
 export default function Game() {
   const { id } = useLocalSearchParams();
@@ -29,7 +28,7 @@ export default function Game() {
   const [coverSound, setCoverSound] = useState<Audio.Sound | null>(null);
   const [currentObject, setCurrentObject] = useState(0);
   const router = useRouter();
-  
+
   useEffect(() => {
     async function loadedObjectSound() {
       const { sound } = await Audio.Sound.createAsync(
@@ -132,6 +131,10 @@ export default function Game() {
       <BackgroundImage source={theme?.background}>
         <TouchableOpacity
           style={styles.returnButton}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Return Button"
+          accessibilityHint="Double tap to go back to menu page"
           onPress={() => {
             coverSound?.stopAsync();
             router.push("/menu");
@@ -149,9 +152,12 @@ export default function Game() {
             { width: width * theme.containerWidth },
             containerAnimationStyle,
           ]}
-          /* onTouchStart={handleTouch} */
-          onPointerDown={handleTouch}
-        >
+          onTouchStart={handleTouch}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Covers"
+          accessibilityHint="Double tap to open and close the covers"
+              >
           <Animated.Image
             source={theme?.cover1}
             style={[styles.image, leftImageStyle]}
@@ -162,21 +168,24 @@ export default function Game() {
             style={[styles.image, rightImageStyle]}
             resizeMode="cover"
           />
-        </Animated.View>
 
-        {objectImage && (
-          <Image
-            source={theme.objects[currentObject].image}
-            style={[
-              styles.objectImage,
-              {
-                width: width * theme.objects[currentObject].width,
-                height: width * theme.objects[currentObject].height,
-                top: height * theme.objects[currentObject].top,
-              },
-            ]}
-          />
-        )}
+          {objectImage && (
+            <Image
+              source={theme.objects[currentObject].image}
+              accessibilityRole="image"
+              accessibilityLabel={`An image of: ${theme.objects[currentObject].name}`}
+              style={[
+                styles.objectImage,
+                {
+                  width: width * theme.objects[currentObject].width,
+                  height: width * theme.objects[currentObject].height,
+                  top: height * theme.objects[currentObject].top,
+                  left: theme.objects[currentObject].left,
+                 },
+              ]}
+            />
+          )}
+        </Animated.View>
       </BackgroundImage>
     </Animated.View>
   );
@@ -191,13 +200,17 @@ const styles = StyleSheet.create({
   },
   returnButton: {
     position: "absolute",
-    top: height * 0.06,
+    top: height * 0.08,
     left: width * 0.02,
+    width: width * 0.15,
+    height: width * 0.1,
+    alignItems: "center",
+    justifyContent: "center",
     zIndex: 10,
   },
   return: {
-    width: width * 0.05,
-    height: width * 0.05,
+    width: "100%",
+    height: "100%",
   },
   container: {
     flexDirection: "row",

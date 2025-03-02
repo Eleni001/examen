@@ -9,11 +9,29 @@ import {
 interface ThemeCardProps {
   imageSource: ImageSourcePropType;
   onPress: () => void;
+  accessible?: boolean;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+  accessibilityRole?: string;
 }
 
-export default function ThemeCard({ imageSource, onPress }: ThemeCardProps) {
+export default function ThemeCard({
+  imageSource,
+  onPress,
+  accessible,
+  accessibilityLabel,
+  accessibilityHint,
+  accessibilityRole,
+}: ThemeCardProps) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.card}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.card}
+      accessible={accessible}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole="button"
+    >
       <Image source={imageSource} style={styles.image} resizeMode="cover" />
     </TouchableOpacity>
   );
