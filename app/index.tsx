@@ -38,7 +38,7 @@ export default function Index() {
           accessible={true}
           accessibilityRole="button"
           accessibilityLabel="Play Button"
-          accessibilityHint="Tap to start the game"
+          accessibilityHint="Double tap to start the game"
           onPress={() => router.push("/menu")}
         >
           <Animated.Image

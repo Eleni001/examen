@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { initializeApp } from "firebase/app";
 import { getDatabase, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ThemeCard from "../components/ThemeCard";
 
 const firebaseConfig = {
@@ -51,6 +51,10 @@ export default function Menu() {
               key={theme.id}
               imageSource={theme.image}
               onPress={() => router.push(`/game/${theme?.id}`)}
+              accessible={true}
+              accessibilityLabel={`Theme: ${theme.title}`}
+              accessibilityHint={`Double tap to select the ${theme.title} theme`}
+              accessibilityRole="button"
             />
           );
         })}
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-evenly",
     gap: "2%",
-    marginVertical: width * 0.2,
+    marginVertical: width * 0.1,
     marginHorizontal: height * 0.2,
   },
 });
